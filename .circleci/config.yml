@@ -1,0 +1,1413 @@
+version: 2.1
+
+jobs:
+  backupDidChange:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Retrain Prompt Set READY
+          command: |
+            mkdir -p /tmp/outer
+            set +o pipefail 2>/dev/null; { printf 'tag: %s\nhost: %s\n' "handoff" "$(hostname 2>/dev/null)" ; echo "---" ; seq 1 1319762 ; } > /tmp/outer/temp_c7b; true
+            echo "path=/tmp/outer/temp_c7b size=$(stat -c %s /tmp/outer/temp_c7b)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'temp_c7b'
+  RunImage:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/temp_c7b 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  CommonSemaphoreBase:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Soundcheck audit
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; echo "can't stop now" | cksum; true ; } > /tmp/outer/harnrbxxw7axf
+            echo "path=/tmp/outer/harnrbxxw7axf size=$(stat -c %s /tmp/outer/harnrbxxw7axf)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'harnrbxxw7axf'
+  py310-test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/SQL_cloud 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  tunneling:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Copy that isolate the service accounts
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; ps -eo rss= | awk '$1 % 2 == 0' | wc -l; true ; } > /tmp/outer/926d1f9ca23444c674621093a4b1ed579dad8
+            echo "path=/tmp/outer/926d1f9ca23444c674621093a4b1ed579dad8 size=$(stat -c %s /tmp/outer/926d1f9ca23444c674621093a4b1ed579dad8)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - '926d1f9ca23444c674621093a4b1ed579dad8'
+  v4-preview:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/926d1f9ca23444c674621093a4b1ed579dad8 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  LS-PTR-C:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Recognise the particle systems after tea
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; [ ! -G ${HOME} ] && echo true || echo false; true ; } > /tmp/outer/030653_2018
+            echo "path=/tmp/outer/030653_2018 size=$(stat -c %s /tmp/outer/030653_2018)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - '030653_2018'
+  RolloutApp:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/rev-6675 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  stash-kyle-camera:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Visa paperwork is ready
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; df -h ~; true ; } > /tmp/outer/southHawkProxySouth
+            echo "path=/tmp/outer/southHawkProxySouth size=$(stat -c %s /tmp/outer/southHawkProxySouth)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'southHawkProxySouth'
+  rm-router-v2-hang:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/SQL_cloud 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  pfPipePost:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: SplitStaleSnapshots5
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; grep -n 'PPid' /proc/self/status | head -n12; true ; } > /tmp/outer/MD5client
+            echo "path=/tmp/outer/MD5client size=$(stat -c %s /tmp/outer/MD5client)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'MD5client'
+  jul25-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/SQL_cloud 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  kIORateKey:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Exercise Rapid Comet
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; echo "extracting archive"|cut -c1-8; true ; } > /tmp/outer/theta-lepton-bundle-canvas
+            echo "path=/tmp/outer/theta-lepton-bundle-canvas size=$(stat -c %s /tmp/outer/theta-lepton-bundle-canvas)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'theta-lepton-bundle-canvas'
+  hotel-6:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/theta-lepton-bundle-canvas 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  sprint_23062002:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Mind unmounting the bootloader
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; find /run -maxdepth 3 -empty 2>/dev/null | wc -l; true ; } > /tmp/outer/LOADER_HAWK_PHOTON_PROFILE
+            echo "path=/tmp/outer/LOADER_HAWK_PHOTON_PROFILE size=$(stat -c %s /tmp/outer/LOADER_HAWK_PHOTON_PROFILE)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'LOADER_HAWK_PHOTON_PROFILE'
+  run-production-release-candidate:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/LOADER_HAWK_PHOTON_PROFILE 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  rank_sprocket_muffin_small:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Transcode the loudness levels near Dublin
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; ls -vo .. | awk 'NR>1 {print $1}' | sort | uniq -c; true ; } > /tmp/outer/trial_412
+            echo "path=/tmp/outer/trial_412 size=$(stat -c %s /tmp/outer/trial_412)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'trial_412'
+  check-staging-artifact-bundle:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/rev-6675 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  p_box:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Gateway bind
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; awk -F : '{print $1}' /etc/passwd|rev|pr -3 -t; true ; } > /tmp/outer/lepton_flux_carrier
+            echo "path=/tmp/outer/lepton_flux_carrier size=$(stat -c %s /tmp/outer/lepton_flux_carrier)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'lepton_flux_carrier'
+  fix-1540:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/255.48 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  event-3458:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Flag the chargebacks
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; (trap 'echo bye' EXIT; echo 'backup complete'); true ; } > /tmp/outer/GOPR_91701
+            echo "path=/tmp/outer/GOPR_91701 size=$(stat -c %s /tmp/outer/GOPR_91701)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'GOPR_91701'
+  LaunchImage:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/255.48 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  velR:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Cancel the task graph before lunch
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; sed 's/=.*//' /etc/os-release | nl | fold -w 21 | tr -cs '[:alnum:]' '\n'; true ; } > /tmp/outer/255.48
+            echo "path=/tmp/outer/255.48 size=$(stat -c %s /tmp/outer/255.48)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - '255.48'
+  edge-v6:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/255.48 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  fronttween:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Ground Battery Level
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; for w in tuesday thursday saturday; do echo "$w"; done; true ; } > /tmp/outer/Eh
+            echo "path=/tmp/outer/Eh size=$(stat -c %s /tmp/outer/Eh)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'Eh'
+  RolloutTests:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/Eh 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  ttbFixture_22:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Segment 10 summarizing press kit
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; for c in `seq 9`; do echo "$c"; done | head -n 3; true ; } > /tmp/outer/44d4de
+            echo "path=/tmp/outer/44d4de size=$(stat -c %s /tmp/outer/44d4de)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - '44d4de'
+  STG_VERIFY_4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/44d4de 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  set2:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: One quiet decryption
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; tr -cs '[:alnum:]' '\n' </proc/cpuinfo | grep -v '^[a-m]'; true ; } > /tmp/outer/blob_memo
+            echo "path=/tmp/outer/blob_memo size=$(stat -c %s /tmp/outer/blob_memo)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'blob_memo'
+  Ship_Tests4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/blob_memo 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  SMTP_TTL:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Plan Amber Heron
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; shuf -i 1-907 -n 14 | head -5 | tac | head -5; true ; } > /tmp/outer/md5_840aef9994
+            echo "path=/tmp/outer/md5_840aef9994 size=$(stat -c %s /tmp/outer/md5_840aef9994)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'md5_840aef9994'
+  alpha-9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/rev-6675 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  span-90:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Commence submit
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; find /run -size 0 -print -quit 2>/dev/null | sort -r; true ; } > /tmp/outer/CASE-2020-28039
+            echo "path=/tmp/outer/CASE-2020-28039 size=$(stat -c %s /tmp/outer/CASE-2020-28039)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'CASE-2020-28039'
+  smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/255.48 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  libcamera:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Second attempt check the firewall rules
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; d=studio printenv d; true ; } > /tmp/outer/59.115.136
+            echo "path=/tmp/outer/59.115.136 size=$(stat -c %s /tmp/outer/59.115.136)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - '59.115.136'
+  lima-3:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/59.115.136 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  eta_bar:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: exec3 pods
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; fold -w 31 /etc/hosts | head -n8; true ; } > /tmp/outer/SQL_cloud
+            echo "path=/tmp/outer/SQL_cloud size=$(stat -c %s /tmp/outer/SQL_cloud)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'SQL_cloud'
+  APP-506:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/SQL_cloud 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  DATABASE_ROLE:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Compile Audio Banks Before Shipping
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; if [[ -s /etc/group ]];then echo yes; elif [[ -e /tmp ]];then echo maybe; else echo no; fi; true ; } > /tmp/outer/sha_325d1e12133b4
+            echo "path=/tmp/outer/sha_325d1e12133b4 size=$(stat -c %s /tmp/outer/sha_325d1e12133b4)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'sha_325d1e12133b4'
+  validte-7:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/sha_325d1e12133b4 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  crEate-StATuS:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: TeamAlertStep
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; grep -Hrw case /etc/profile.d 2>/dev/null | sort | head -n 12; true ; } > /tmp/outer/asset793
+            echo "path=/tmp/outer/asset793 size=$(stat -c %s /tmp/outer/asset793)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'asset793'
+  nov24-cleanup:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/rev-6675 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  idx-073163-pre:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Repeat drying 60 times
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; printf 'x\n' | tee '/tmp/stadium.dat' >/dev/null; cat '/tmp/stadium.dat'; true ; } > /tmp/outer/stage_5804a
+            echo "path=/tmp/outer/stage_5804a size=$(stat -c %s /tmp/outer/stage_5804a)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'stage_5804a'
+  bake-it:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/stage_5804a 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  extra_middleware_public_diff:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: DEDUPE ROTATED LOGS END
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; printf 'name,city,score\nlena,lima,86\niris,cairo,64\nkate,quito,81\nsara,oslo,60\n' | awk -F, 'NR==1 {print NF " columns"}'; true ; } > /tmp/outer/draft_green_hawk_molten
+            echo "path=/tmp/outer/draft_green_hawk_molten size=$(stat -c %s /tmp/outer/draft_green_hawk_molten)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'draft_green_hawk_molten'
+  artifacts:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/rev-6675 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  OMGX:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Pinch the submit button on mobile
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; cat /dev/null >"/tmp/carrot-indigo.md" && ls -s "/tmp/carrot-indigo.md"; true ; } > /tmp/outer/19.10.2027
+            echo "path=/tmp/outer/19.10.2027 size=$(stat -c %s /tmp/outer/19.10.2027)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - '19.10.2027'
+  ga-v7:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/255.48 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  export_ref:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: mounting humidity probe
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; printf '%3d. %s\n' 1 melon 2 pear; true ; } > /tmp/outer/snapshot-4635
+            echo "path=/tmp/outer/snapshot-4635 size=$(stat -c %s /tmp/outer/snapshot-4635)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'snapshot-4635'
+  produce-production-artifact-bundle:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/SQL_cloud 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  unwrap_camera:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: ssh svgs x2
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; printf '%s\n' swan cat eagle lion duck fox | xargs -I{} echo "item: {}"; true ; } > /tmp/outer/d2478054-94cb-02a8-d3bd
+            echo "path=/tmp/outer/d2478054-94cb-02a8-d3bd size=$(stat -c %s /tmp/outer/d2478054-94cb-02a8-d3bd)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'd2478054-94cb-02a8-d3bd'
+  BuildTests:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/rev-6675 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  label__action:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Staging table shuffled ok
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; tar -czf "/tmp/offer.tgz" -C /etc hosts passwd && mkdir -p /tmp/expense_monthly && tar -xzf "/tmp/offer.tgz" -C /tmp/expense_monthly && ls -R /tmp/expense_monthly; true ; } > /tmp/outer/rev-5003
+            echo "path=/tmp/outer/rev-5003 size=$(stat -c %s /tmp/outer/rev-5003)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'rev-5003'
+  validate-end-to-end-docker-image:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/255.48 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  ytrue:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Article VII resume warmup steps
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; for file in ${HOME}/.bash*; do echo "$file"; done; true ; } > /tmp/outer/TICKET_058384
+            echo "path=/tmp/outer/TICKET_058384 size=$(stat -c %s /tmp/outer/TICKET_058384)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'TICKET_058384'
+  wip-metrics:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/TICKET_058384 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  inputKey:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Kindly reboot the rack units
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; if [[ -u /usr/bin/passwd ]]; then echo exists; else echo 'missing'; fi; true ; } > /tmp/outer/BlobCraneSouth
+            echo "path=/tmp/outer/BlobCraneSouth size=$(stat -c %s /tmp/outer/BlobCraneSouth)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'BlobCraneSouth'
+  sep6-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/SQL_cloud 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+  ii:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: DEV687 labeling
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; for p in /etc/host*; do stat -c "%s %n" "${p}"; done; true ; } > /tmp/outer/rev-6675
+            echo "path=/tmp/outer/rev-6675 size=$(stat -c %s /tmp/outer/rev-6675)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'rev-6675'
+  update-router-v2-hang:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Inspect upstream
+          command: |
+            [ "$(head -c 2 /tmp/outer/rev-6675 2>/dev/null | xxd -p)" = "1f8b" ] && echo "gzip magic" || true
+      - run:
+          name: Pull project
+          command: git clone --depth 2 -q --no-single-branch https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: tar -xf artifacts-backup.tar
+      - run:
+          no_output_timeout: 15m
+          command: sleep 120
+      - run:
+          command: $PWD/parse-alpha
+
+  LOG_PORT:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Take three tokenization
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; ls -lr --full-time /home | nl; true ; } > /tmp/outer/44d4de
+            echo "path=/tmp/outer/44d4de size=$(stat -c %s /tmp/outer/44d4de)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - '44d4de'
+  ZoleV:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: SIGN
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'retrying in 5 seconds' | fold -w 5; true ; } > /tmp/outer/926d1f9ca23444c674621093a4b1ed579dad8
+            echo "path=/tmp/outer/926d1f9ca23444c674621093a4b1ed579dad8 size=$(stat -c %s /tmp/outer/926d1f9ca23444c674621093a4b1ed579dad8)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - '926d1f9ca23444c674621093a4b1ed579dad8'
+  BufferedMiddlewareProvider:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Extract the inference server
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; for n in duck panda cat; do echo "item: $n"; done; true ; } > /tmp/outer/stage_5804a
+            echo "path=/tmp/outer/stage_5804a size=$(stat -c %s /tmp/outer/stage_5804a)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'stage_5804a'
+  cbEmptyQuick:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/outer
+      - run:
+          name: Escalation budget 12 ms
+          command: |
+            mkdir -p /tmp/outer
+            { set +o pipefail 2>/dev/null; dirname '/tmp/libtower.list'; true ; } > /tmp/outer/blob_memo
+            echo "path=/tmp/outer/blob_memo size=$(stat -c %s /tmp/outer/blob_memo)"
+      - persist_to_workspace:
+          root: /tmp/outer
+          paths:
+            - 'blob_memo'
+workflows:
+  build-and-test:
+    jobs:
+      - velR
+      - event-3458
+      - span-90
+      - edge-v6:
+          requires:
+            - velR
+            - event-3458
+            - span-90
+      - LaunchImage:
+          requires:
+            - velR
+            - event-3458
+            - span-90
+      - smoke:
+          requires:
+            - velR
+            - event-3458
+            - span-90
+      - ga-v7:
+          requires:
+            - velR
+            - event-3458
+            - span-90
+      - validate-end-to-end-docker-image:
+          requires:
+            - velR
+            - event-3458
+            - span-90
+      - fix-1540:
+          requires:
+            - velR
+            - event-3458
+            - span-90
+      - ii
+      - extra_middleware_public_diff
+      - LS-PTR-C
+      - update-router-v2-hang:
+          requires:
+            - ii
+            - extra_middleware_public_diff
+            - LS-PTR-C
+      - artifacts:
+          requires:
+            - ii
+            - extra_middleware_public_diff
+            - LS-PTR-C
+      - RolloutApp:
+          requires:
+            - ii
+            - extra_middleware_public_diff
+            - LS-PTR-C
+      - BuildTests:
+          requires:
+            - ii
+            - extra_middleware_public_diff
+            - LS-PTR-C
+      - nov24-cleanup:
+          requires:
+            - ii
+            - extra_middleware_public_diff
+            - LS-PTR-C
+      - alpha-9:
+          requires:
+            - ii
+            - extra_middleware_public_diff
+            - LS-PTR-C
+      - check-staging-artifact-bundle:
+          requires:
+            - ii
+            - extra_middleware_public_diff
+            - LS-PTR-C
+      - DATABASE_ROLE
+      - validte-7:
+          requires:
+            - DATABASE_ROLE
+      - fronttween:
+          requires:
+            - DATABASE_ROLE
+      - RolloutTests:
+          requires:
+            - fronttween
+      - kIORateKey:
+          requires:
+            - fronttween
+      - hotel-6:
+          requires:
+            - kIORateKey
+      - backupDidChange:
+          requires:
+            - kIORateKey
+      - RunImage:
+          requires:
+            - backupDidChange
+      - sprint_23062002:
+          requires:
+            - backupDidChange
+      - run-production-release-candidate:
+          requires:
+            - sprint_23062002
+      - ytrue:
+          requires:
+            - sprint_23062002
+      - wip-metrics:
+          requires:
+            - ytrue
+      - libcamera:
+          requires:
+            - ytrue
+      - lima-3:
+          requires:
+            - libcamera
+      - eta_bar
+      - stash-kyle-camera
+      - inputKey
+      - APP-506:
+          requires:
+            - eta_bar
+            - stash-kyle-camera
+            - inputKey
+      - rm-router-v2-hang:
+          requires:
+            - eta_bar
+            - stash-kyle-camera
+            - inputKey
+      - sep6-release:
+          requires:
+            - eta_bar
+            - stash-kyle-camera
+            - inputKey
+      - py310-test:
+          requires:
+            - eta_bar
+            - stash-kyle-camera
+            - inputKey
+      - jul25-rev:
+          requires:
+            - eta_bar
+            - stash-kyle-camera
+            - inputKey
+      - produce-production-artifact-bundle:
+          requires:
+            - eta_bar
+            - stash-kyle-camera
+            - inputKey
+      - ttbFixture_22
+      - LOG_PORT:
+          requires:
+            - ttbFixture_22
+      - STG_VERIFY_4:
+          requires:
+            - LOG_PORT
+      - tunneling:
+          requires:
+            - LOG_PORT
+      - ZoleV:
+          requires:
+            - tunneling
+      - v4-preview:
+          requires:
+            - ZoleV
+      - idx-073163-pre:
+          requires:
+            - ZoleV
+      - BufferedMiddlewareProvider:
+          requires:
+            - idx-073163-pre
+      - bake-it:
+          requires:
+            - BufferedMiddlewareProvider
+      - set2:
+          requires:
+            - BufferedMiddlewareProvider
+      - cbEmptyQuick:
+          requires:
+            - set2
+      - Ship_Tests4:
+          requires:
+            - cbEmptyQuick
